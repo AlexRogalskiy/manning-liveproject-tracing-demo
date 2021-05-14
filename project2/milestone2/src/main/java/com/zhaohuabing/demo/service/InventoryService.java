@@ -9,26 +9,21 @@ import org.springframework.stereotype.Service;
  * Huabing Zhao
  */
 @Service
-public class DeliveryService {
+public class InventoryService {
 
     @Autowired
-    private Tracer tracer;
+    Tracer tracer;
 
-    @Autowired
-    private LogisticsService logisticsService;
-
-    public String arrangeDelivery(Span rootSpan) {
-        Span span = tracer.buildSpan("arrangeDelivery").asChildOf(rootSpan).start();
-	String result = "";
+    public String createOrder() {
+        Span span = tracer.buildSpan("createOrder").start();
+        // Add a random delay to the service
         try {
-            // Add a random delay to the service
             Thread.sleep((long) (Math.random() * 1000));
-	    result = logisticsService.transport(span);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
             span.finish();
         }
-        return result + "\r\nYour order is delivered!";
+        return "Your order has been created!";
     }
 }
