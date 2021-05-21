@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
  * Huabing Zhao
  */
 @Service
-public class BillingService {
+public class LogisticsService {
 
-    @Autowired Tracer tracer;
+    @Autowired
+    private Tracer tracer;
 
-    public String payment(Span parent) {
-        Span span = tracer.buildSpan("payment").asChildOf(parent).start();
+    public String transport() {
+        Span span = tracer.buildSpan("transport").start();
         // Add a random delay to the service
         try {
             Thread.sleep((long) (Math.random() * 1000));
@@ -23,6 +24,7 @@ public class BillingService {
         }finally {
             span.finish();
         }
-        return "Your order has been paid!";
+
+        return "Your order is on the way!";
     }
 }
