@@ -3,7 +3,7 @@ docker rm demo jaeger
 
 docker run -d --name demo \
   -p 80:8080 \
-  zhaohuabing/liveproject-tracing
+  zhaohuabing/liveproject-tracing:v1.2
 
 docker run -d --name jaeger \
   -p 14268:14268 \

@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BillingService {
 
-    @Autowired Tracer tracer;
+    @Autowired
+    Tracer tracer;
 
     public String payment() {
         Span span = tracer.buildSpan("payment").start();
@@ -20,7 +21,7 @@ public class BillingService {
             Thread.sleep((long) (Math.random() * 1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             span.finish();
         }
         return "Your order has been paid!";

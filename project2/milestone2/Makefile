@@ -1,7 +1,7 @@
 # Build parameters
 OUT?=./target
 DOCKER_TMP?=$(OUT)/docker_temp/
-DOCKER_TAG?=zhaohuabing/liveproject-tracing:latest
+DOCKER_TAG?=zhaohuabing/liveproject-tracing:v2.2
 BINARY_NAME?=$(OUT)/tracing-demo-0.0.1-SNAPSHOT.jar
 
 docker-build: build

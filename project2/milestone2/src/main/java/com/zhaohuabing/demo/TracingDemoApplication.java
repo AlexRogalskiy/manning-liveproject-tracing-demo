@@ -13,18 +13,18 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringBootApplication
 public class TracingDemoApplication {
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-		return restTemplateBuilder.build();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TracingDemoApplication.class, args);
+    }
 
-	@Bean
-	public  JaegerTracer getTracer() {
+    @Bean
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder.build();
+    }
 
-		return Configuration.fromEnv("EShop").getTracer();
-	}
+    @Bean
+    public JaegerTracer getTracer() {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TracingDemoApplication.class, args);
-	}
+        return Configuration.fromEnv("EShop").getTracer();
+    }
 }

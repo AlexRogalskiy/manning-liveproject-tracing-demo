@@ -1,43 +1,46 @@
 package com.zhaohuabing.demo.service;
 
+import com.zhaohuabing.demo.HtttpHeaderCarrier;
 import io.opentracing.Span;
+import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
-import io.opentracing.log.Fields;
-import io.opentracing.tag.Tags;
+import io.opentracing.propagation.Format;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Huabing Zhao
  */
-@Service
+@RestController
 public class DeliveryService {
 
     @Autowired
     private Tracer tracer;
 
     @Autowired
-    private LogisticsService logisticsService;
+    private RestTemplate restTemplate;
 
-    public String arrangeDelivery() {
-        Span parent = tracer.scopeManager().activeSpan();
-        Span span = tracer.buildSpan("arrangeDelivery").start();
-        String result="";
-        try  {
-            // set active span to the current span before calling logisticsService
-            tracer.scopeManager().activate(span);
+    @RequestMapping(value = "/arrangeDelivery")
+    public String arrangeDelivery(@RequestHeader HttpHeaders headers) {
+        SpanContext parent = tracer.extract(Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
+        Span span = tracer.buildSpan("arrangeDelivery").asChildOf(parent).start();
+        String result = "";
+        try {
             Thread.sleep((long) (Math.random() * 1000));
-            result = logisticsService.transport();
-        } catch (Exception ex) {
-            Tags.ERROR.set(span, true);
-            span.log(Map.of(Fields.EVENT, "error", Fields.ERROR_OBJECT, ex, Fields.MESSAGE, ex.getMessage()));
+            tracer.inject(span.context(), Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
+            HttpEntity<String> entity = new HttpEntity<>("", headers);
+            result += restTemplate.exchange("http://logistics:8080/transport", HttpMethod.GET, entity, String.class).getBody();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
             span.finish();
-            // set active span back to the parent span
-            tracer.scopeManager().activate(parent);
-            return result + "\r\nYour order is delivered!";
         }
+        return result + "<BR>Your order is delivered!";
     }
 }

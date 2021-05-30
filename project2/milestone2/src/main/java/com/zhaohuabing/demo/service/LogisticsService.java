@@ -21,7 +21,7 @@ public class LogisticsService {
             Thread.sleep((long) (Math.random() * 1000));
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             span.finish();
         }
 
