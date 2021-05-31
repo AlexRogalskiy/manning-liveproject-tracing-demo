@@ -94,7 +94,7 @@ spec:
     spec:
       containers:
         - name: eshop
-          image: zhaohuabing/liveproject-tracing:v3.1
+          image: zhaohuabing/liveproject-tracing:v3.2
           ports:
             - containerPort: 8080
           env:
@@ -117,7 +117,7 @@ spec:
     spec:
       containers:
         - name: inventory
-          image: zhaohuabing/liveproject-tracing:v3.1
+          image: zhaohuabing/liveproject-tracing:v3.2
           ports:
             - containerPort: 8080
           env:
@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
         - name: billing
-          image: zhaohuabing/liveproject-tracing:v3.1
+          image: zhaohuabing/liveproject-tracing:v3.2
           ports:
             - containerPort: 8080
           env:
@@ -163,7 +163,7 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: zhaohuabing/liveproject-tracing:v3.1
+          image: zhaohuabing/liveproject-tracing:v3.2
           ports:
             - containerPort: 8080
           env:
@@ -186,7 +186,7 @@ spec:
     spec:
       containers:
         - name: logistics
-          image: zhaohuabing/liveproject-tracing:v3.1
+          image: zhaohuabing/liveproject-tracing:v3.2
           ports:
             - containerPort: 8080
           env:

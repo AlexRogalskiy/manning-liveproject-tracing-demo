@@ -6,31 +6,10 @@
 make
 ```
 
-## How to run this demo?
-
-### Start a Jaeger all-in-one sever for test
+## Run and test the demo
 
 ```bash
-docker run -d --name jaeger \
-  -p 14268:14268 \
-  -p 16686:16686 \
-  jaegertracing/all-in-one:1.22
-```
-
-### Start the demo application
-```bash
-docker run -d --name demo \
-  -p 80:8080 \
-  zhaohuabing/liveproject-tracing
-```
-
-## Test the demo
-
-Use curl command or open url ```127.0.0.1/checkout``` in the browser. You should be able to see output as the followings.
-
-```bash
-➜  milestone1 git:(master) ✗ curl 127.0.0.1/checkout
-You have successfully checked out your shopping cart.
+./test.sh
 ```
 
 ## Check the generated trace and span at the Jaeger UI
