@@ -31,7 +31,7 @@ public class EShopController {
             tracer.scopeManager().activate(span);
             // Use HTTP GET in this demo. In a real world use case,We should use HTTP POST instead.
             // The three services are bundled in one jar for simplicity. To make it work,define three services in Kubernets.
-            HttpEntity entity = new HttpEntity("", headers);
+            HttpEntity entity = new HttpEntity("");
             result += restTemplate.exchange("http://inventory:8080/createOrder", HttpMethod.GET, entity, String.class).getBody();
             result += "<BR>";
             result += restTemplate.exchange("http://billing:8080/payment", HttpMethod.GET, entity, String.class).getBody();

@@ -29,7 +29,7 @@ public class DeliveryService {
         String result = "";
         try {
             Thread.sleep((long) (Math.random() * 1000));
-            HttpEntity entity = new HttpEntity<>("", headers);
+            HttpEntity entity = new HttpEntity<>("");
             result += restTemplate.exchange("http://logistics:8080/transport", HttpMethod.GET, entity, String.class).getBody();
         } catch (InterruptedException e) {
             e.printStackTrace();

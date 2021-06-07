@@ -1,5 +1,6 @@
 package com.zhaohuabing.demo;
 
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +24,9 @@ public class EShopController {
         try {
             // Use HTTP GET in this demo. In a real world use case,We should use HTTP POST instead.
             // The three services are bundled in one jar for simplicity. To make it work,define three services in Kubernets.
-            HttpEntity<String> entity = new HttpEntity<>("");
+            HttpHeaders outboundHeaders = new HttpHeaders();
+            HeaderUtil.copyTracingHeaders(headers,outboundHeaders);
+            HttpEntity<String> entity = new HttpEntity<>("",outboundHeaders);
             result += restTemplate.exchange("http://inventory:8080/createOrder", HttpMethod.GET, entity, String.class).getBody();
             result += "<BR>";
             result += restTemplate.exchange("http://billing:8080/payment", HttpMethod.GET, entity, String.class).getBody();

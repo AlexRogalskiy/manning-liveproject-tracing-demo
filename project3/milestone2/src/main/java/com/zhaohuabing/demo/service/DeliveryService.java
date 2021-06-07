@@ -33,8 +33,9 @@ public class DeliveryService {
         String result = "";
         try {
             Thread.sleep((long) (Math.random() * 1000));
-            tracer.inject(span.context(), Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(headers));
-            HttpEntity<String> entity = new HttpEntity<>("", headers);
+            HttpHeaders outboundHeaders = new HttpHeaders();
+            tracer.inject(span.context(), Format.Builtin.HTTP_HEADERS, new HtttpHeaderCarrier(outboundHeaders));
+            HttpEntity<String> entity = new HttpEntity<>("", outboundHeaders);
             result += restTemplate.exchange("http://logistics:8080/transport", HttpMethod.GET, entity, String.class).getBody();
         } catch (InterruptedException e) {
             e.printStackTrace();

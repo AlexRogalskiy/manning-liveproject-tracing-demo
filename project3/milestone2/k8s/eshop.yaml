@@ -95,6 +95,7 @@ spec:
       containers:
         - name: eshop
           image: zhaohuabing/liveproject-tracing:v3.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
@@ -118,6 +119,7 @@ spec:
       containers:
         - name: inventory
           image: zhaohuabing/liveproject-tracing:v3.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
@@ -141,6 +143,7 @@ spec:
       containers:
         - name: billing
           image: zhaohuabing/liveproject-tracing:v3.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
@@ -164,6 +167,7 @@ spec:
       containers:
         - name: delivery
           image: zhaohuabing/liveproject-tracing:v3.2
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
