@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: eshop-vs
+spec:
+  gateways:
+    - eshop-gw
+  hosts:
+    - '*'
+  http:
+    - match:
+        - uri:
+            prefix: /checkout
+      route:
+        - destination:
+            host: eshop.default.svc.cluster.local
+            port:
+              number: 8080
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: tracing.istio-system.svc.cluster.local
+            port:
+              number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: eshop-gw
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: http
+        number: 80
+        protocol: HTTP
