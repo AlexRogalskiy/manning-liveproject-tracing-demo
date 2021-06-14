@@ -14,6 +14,6 @@ make
 
 ## Check the generated trace and span at the Jaeger UI
 
-Open URL ```http://127.0.0.1:16686/``` in the browser. You should be able to see the generated traces in the Jaeger UI.
+Open URL ```http://127.0.0.1:8080/``` in the browser. You should be able to see the generated traces in the Jaeger UI.
 
 ![](screenshot/trace.png)

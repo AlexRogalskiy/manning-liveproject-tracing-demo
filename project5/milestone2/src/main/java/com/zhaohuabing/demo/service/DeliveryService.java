@@ -1,5 +1,6 @@
 package com.zhaohuabing.demo.service;
 
+import com.zhaohuabing.demo.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,7 @@ public class DeliveryService {
         try {
             Thread.sleep((long) (Math.random() * 1000));
             HttpHeaders outboundHeaders = new HttpHeaders();
+            HeaderUtil.copyTracingHeaders(headers,outboundHeaders);
             HttpEntity<String> entity = new HttpEntity<>("",outboundHeaders);
             result += restTemplate.exchange("http://logistics:8080/transport", HttpMethod.GET, entity, String.class).getBody();
         } catch (InterruptedException e) {
