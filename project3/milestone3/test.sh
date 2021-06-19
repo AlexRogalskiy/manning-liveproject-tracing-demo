@@ -1,7 +1,6 @@
 BASEDIR=$(dirname "$0")
 
 kubectl apply -f $BASEDIR/k8s
-kubectl apply -f $BASEDIR/istio
 
 echo "Wait 20 seconds until k8s deployments are ready ..."
 
@@ -14,11 +13,12 @@ do
 done
 
 echo "Forward port to localhost, if it fails,  please wait until all pods are ready and run the following commands manually ..."
-kubectl port-forward service/istio-ingressgateway 8080:80 -n istio-system &
+kubectl port-forward service/eshop 8080:8080 &
+kubectl port-forward service/jaeger 16686:16686 &
 
 echo "Wait 10 seconds until port forwarding is ready ..."
 sleep 10
 
 echo "Call the eShop microservice, if it fails,  please wait a moment and run the following commands manually ..."
 
-curl 127.0.0.1:8080/checkout
+curl 127.0.0.1:8080/checkout --header "Host: eshop" --header "user: huabing"

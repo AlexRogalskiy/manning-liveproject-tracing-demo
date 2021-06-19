@@ -63,6 +63,21 @@ spec:
   selector:
     app: logistics
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  labels:
+    app: jaeger
+spec:
+  ports:
+    - port: 14268
+      name: http-collector
+    - port: 16686
+      name: http-ui
+  selector:
+    app: jaeger
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,10 +94,13 @@ spec:
     spec:
       containers:
         - name: eshop
-          image: zhaohuabing/liveproject-tracing:v5.2
+          image: zhaohuabing/liveproject-tracing:v3.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAEGER_ENDPOINT
+              value: "http://jaeger:14268/api/traces"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -100,10 +118,13 @@ spec:
     spec:
       containers:
         - name: inventory
-          image: zhaohuabing/liveproject-tracing:v5.2
+          image: zhaohuabing/liveproject-tracing:v3.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAEGER_ENDPOINT
+              value: "http://jaeger:14268/api/traces"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -121,10 +142,13 @@ spec:
     spec:
       containers:
         - name: billing
-          image: zhaohuabing/liveproject-tracing:v5.2
+          image: zhaohuabing/liveproject-tracing:v3.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAEGER_ENDPOINT
+              value: "http://jaeger:14268/api/traces"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -142,10 +166,13 @@ spec:
     spec:
       containers:
         - name: delivery
-          image: zhaohuabing/liveproject-tracing:v5.2
+          image: zhaohuabing/liveproject-tracing:v3.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAEGER_ENDPOINT
+              value: "http://jaeger:14268/api/traces"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -163,8 +190,32 @@ spec:
     spec:
       containers:
         - name: logistics
-          image: zhaohuabing/liveproject-tracing:v5.2
+          image: zhaohuabing/liveproject-tracing:v3.3
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAEGER_ENDPOINT
+              value: "http://jaeger:14268/api/traces"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+    spec:
+      containers:
+        - name: jaeger
+          image: jaegertracing/all-in-one:1.22
+          ports:
+            - containerPort: 14268
+            - containerPort: 16686
 
