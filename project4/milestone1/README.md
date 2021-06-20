@@ -6,6 +6,12 @@
 make
 ```
 
+## Install Istio
+
+```bash
+./install-istio.sh
+```
+
 ## Run and test the demo
 
 ```bash
