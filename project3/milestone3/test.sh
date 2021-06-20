@@ -13,6 +13,7 @@ do
 done
 
 echo "Forward port to localhost, if it fails,  please wait until all pods are ready and run the following commands manually ..."
+kill `ps -ef|grep "kubectl port-forward"|awk '{print $2}'`
 kubectl port-forward service/eshop 8080:8080 &
 kubectl port-forward service/jaeger 16686:16686 &
 
@@ -21,4 +22,4 @@ sleep 10
 
 echo "Call the eShop microservice, if it fails,  please wait a moment and run the following commands manually ..."
 
-curl 127.0.0.1:8080/checkout --header "Host: eshop" --header "user: huabing"
+curl 127.0.0.1:8080/checkout --header "user: huabing"

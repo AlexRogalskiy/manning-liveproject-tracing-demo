@@ -14,6 +14,7 @@ do
 done
 
 echo "Forward port to localhost, if it fails,  please wait until all pods are ready and run the following commands manually ..."
+kill `ps -ef|grep "kubectl port-forward"|awk '{print $2}'`
 kubectl port-forward service/istio-ingressgateway 8080:80 -n istio-system &
 
 echo "Wait 10 seconds until port forwarding is ready ..."
